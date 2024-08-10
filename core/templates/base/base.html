@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}SIRCA{% endblock %}</title>
+</head>
+<body>
+    <nav>
+        <ul>
+            {% if user.is_authenticated %}
+                <li><a href="{% url 'panel_principal' %}">Inicio</a></li>
+            {% else %}
+                <li><a href="{% url 'portal' %}">Home</a></li>
+            {% endif %}
+    
+            {% if user.is_authenticated %}
+                <li>
+                    <form action="{% url 'logout' %}" method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit">Cerrar sesión</button>
+                    </form>
+                </li>
+            {% else %}
+                <li><a href="{% url 'inicio_sesion' %}">Inicio de sesión</a></li>
+                <li><a href="{% url 'registro_usuario' %}">Registro</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+
+    <div class="container">
+        {% block content %}
+        <!-- Aquí se cargará el contenido específico de cada vista -->
+        {% endblock %}
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Mi Aplicación. Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>
+
+
